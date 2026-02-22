@@ -6,3 +6,4 @@ def div(n):
 m = int(input())
 for b in div(m):
     print(b)
+ 
