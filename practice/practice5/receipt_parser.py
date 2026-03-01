@@ -1,44 +1,43 @@
 import re
 import json
-
-def parse_receipt(file_path):
-    with open(file_path, 'r', encoding='utf-8') as f:
-        content = f.read()
-    
-    result = {
-        "store": re.search(r'Филиал\s+(.+)', content).group(1).strip(),
-        "BIN": re.search(r'БИН\s+(\d+)', content).group(1),
-        "receipt_number": re.search(r'Чек\s*№(\d+)', content).group(1),
-        "date": re.search(r'Время:\s*(\d{2}\.\d{2}\.\d{4})', content).group(1),
-        "time": re.search(r'Время:\s*\d{2}\.\d{2}\.\d{4}\s+(\d{2}:\d{2}:\d{2})', content).group(1),
-        "cashier": re.search(r'Кассир\s+(.+)', content).group(1).strip(),
-        "payment_method": "Банковская карта" if re.search(r'Банковская карта', content) else "Наличные",
-        "total": float(re.search(r'ИТОГО:\s*\n?([\d\s]+)', content).group(1).replace(' ', '')),
-        "products": []
+def clean_price(price_str):
+    return float(price_str.replace(" ", "").replace(",", "."))
+def extract_prices(text):
+    pattern = r"\n(\d[\d\s]*,\d{2})\nСтоимость"
+    matches = re.findall(pattern, text)
+    return [clean_price(p) for p in matches]
+def extract_products(text):
+    pattern = r"\d+\.\n(.+?)\n\d+,\d{3}\s+x\s+[\d\s]+,\d{2}"
+    matches = re.findall(pattern, text, re.DOTALL)
+    return [m.replace("\n", " ").strip() for m in matches]
+def extract_total(text):
+    pattern = r"ИТОГО:\n([\d\s]+,\d{2})"
+    match = re.search(pattern, text)
+    return clean_price(match.group(1)) if match else None
+def extract_payment_method(text):
+    pattern = r"(Банковская карта|Наличные)"
+    match = re.search(pattern, text)
+    return match.group(1) if match else None
+def extract_datetime(text):
+    pattern = r"Время:\s*(\d{2}\.\d{2}\.\d{4})\s*(\d{2}:\d{2}:\d{2})"
+    match = re.search(pattern, text)
+    if match:
+        return {
+            "date": match.group(1),
+            "time": match.group(2)
+        }
+    return None
+def parse_receipt(text):
+    return {
+        "products": extract_products(text),
+        "prices": extract_prices(text),
+        "total": extract_total(text),
+        "payment_method": extract_payment_method(text),
+        "datetime": extract_datetime(text)
     }
 
-    products = re.findall(r'(\d+)\.\s*\n?(.+?)\n([\d,]+)\s*x\s*([\d\s,]+)\n([\d\s,]+)', content)
-    for p in products:
-        result["products"].append({
-            "name": p[1].strip(),
-            "qty": float(p[2].replace(',', '.')),
-            "price": float(p[4].replace(' ', '').replace(',', '.'))
-        })
-    
-    result["all_prices"] = [p["price"] for p in result["products"]]
-    result["calculated_total"] = sum(result["all_prices"])
-    
-    return result
-
-data = parse_receipt('raw.txt')
-
-print(f"Магазин: {data['store']}")
-print(f"Дата: {data['date']} {data['time']}")
-print(f"Оплата: {data['payment_method']}")
-print(f"\nТовары ({len(data['products'])} шт.):")
-for p in data["products"]:
-    print(f"  - {p['name'][:40]}: {p['price']:.2f}")
-print(f"\nВсе цены: {data['all_prices']}")
-print(f"Рассчитанный итог: {data['calculated_total']:.2f}")
-print(f"Итого по чеку: {data['total']:.2f}")
-print(f"\nJSON:\n{json.dumps(data, ensure_ascii=False, indent=2)}")
+if __name__ == "__main__":
+    with open("raw.txt", "r", encoding="utf-8") as f:
+        receipt_text = f.read()
+    result = parse_receipt(receipt_text)
+    print(json.dumps(result, indent=4, ensure_ascii=False))
