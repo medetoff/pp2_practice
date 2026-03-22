@@ -1,5 +1,10 @@
-n = int(input())
-numbers = list(map(int, input().split()))
+from datetime import datetime
+semester = datetime.strptime(input(), "%Y-%m-%d")
+exam1 = datetime.strptime(input(), "%Y-%m-%d")
+exam2 = datetime.strptime(input(), "%Y-%m-%d")
+exam3 = datetime.strptime(input(), "%Y-%m-%d")
 
-squares = map(lambda x: x**2, numbers)
-print(sum(squares))
+print((exam1 - semester).days)
+print((exam2 - semester).days)
+print((exam3 - semester).days)
+r"\S+@\S+\.\S+"
