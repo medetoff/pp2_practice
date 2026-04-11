@@ -6,26 +6,41 @@ allowed_sort_types = ['asc', '+', '-', 'desc', '']
 
 def get_info(filter, sort_key, sort_type, sort_aggregate_value):
     config = load_config()
+    sql = None
+    
     if filter.lower() == '*' or filter.lower() == 'all':
         if sort_key == '':
-            sql = """
-                select * from contacts 
-            """
+            if sort_aggregate_value != '':
+                sql = f"""
+                    select * from contacts where contact_first_name='{sort_aggregate_value}'
+                """
+            else:
+                sql = "select * from contacts"
         elif (sort_key not in allowed_attributes) or (sort_type not in allowed_sort_types):
             print("Key/type error: Please ensure you've typed sort_key and sort_type correctly.")
             print(f"Arguments you've written: sort_key: {sort_key}, sort_type: {sort_type}")
             print("Allowed attributes:", *allowed_attributes)
             print("Allowed sort_types:", *allowed_sort_types)
         else:
-            sql = f"""
-                select * from contacts order by {sort_key} {sort_type}
-            """
+            if sort_aggregate_value != '':
+                sql = f"""
+                    select * from contacts 
+                    where contact_first_name='{sort_aggregate_value}'
+                    order by {sort_key} {sort_type}
+                """
+            else:
+                sql = f"select * from contacts order by {sort_key} {sort_type}"
+
     elif filter.lower() in allowed_attributes:
         sql = f"""
             select * from contacts where {filter}='{sort_aggregate_value}'
         """
     else:
         print("Error: The filter isn't correct. You can choose: '*' (displaying all data), 'key_name' and needed key value")
+
+    if sql is None:
+        return
+    
     try:
         with psycopg2.connect(**config) as conn:
             with conn.cursor() as cursor:
