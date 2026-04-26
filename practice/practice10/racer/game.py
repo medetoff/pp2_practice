@@ -17,10 +17,10 @@ DISPLAYSURF = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("Racer")
 font = pygame.font.SysFont("Verdana", 30)
 
-# Игровые переменные
+#Игровые переменные
 score           = 0
 coins_collected = 0
-speed           = 5
+speed           = 5 #cкорость игры
 
 
 class Enemy(pygame.sprite.Sprite):
@@ -37,7 +37,7 @@ class Enemy(pygame.sprite.Sprite):
         self.rect.move_ip(0, speed)
         if self.rect.top > SCREEN_HEIGHT:  # Враг вышел за экран — очко игроку
             score += 1
-            speed += 0.2
+            speed += 0.2 #растение сложности
             self.rect.x = random.randint(0, SCREEN_WIDTH - self.rect.width)
             self.rect.y = 0
 
@@ -53,9 +53,9 @@ class Player(pygame.sprite.Sprite):
     def update(self):
         keys = pygame.key.get_pressed()
         if keys[K_LEFT] and self.rect.left > 0:       # Движение влево
-            self.rect.move_ip(-7, 0)
+            self.rect.move_ip(-7, 0) #скорость влево
         if keys[K_RIGHT] and self.rect.right < SCREEN_WIDTH:  # Движение вправо
-            self.rect.move_ip(7, 0)
+            self.rect.move_ip(7, 0) #скорость вправо
 
 
 class Coin(pygame.sprite.Sprite):

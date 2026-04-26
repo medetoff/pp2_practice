@@ -5,10 +5,10 @@ def main():
     screen = pygame.display.set_mode((800, 600))
     clock = pygame.time.Clock()
     canvas = pygame.Surface(screen.get_size())
-    canvas.fill((255, 255, 255))  # белый фон холста
-    radius = 10
+    canvas.fill((255, 255, 255))  # белый фон
+    radius = 10 #толщина кисти
     mode = "brush"
-    color = (0, 0, 255)
+    color = (0, 0, 255) #цвет кисти
     drawing = False
     start_pos = None
     last_pos = None
@@ -21,15 +21,20 @@ def main():
                 if event.key == pygame.K_ESCAPE:
                     return
                 if event.key == pygame.K_1:
-                    mode = "brush"       # кисть
-                elif event.key == pygame.K_2:
-                    mode = "rect"        # прямоугольник
-                elif event.key == pygame.K_3:
-                    mode = "circle"      # круг
-                elif event.key == pygame.K_4:
-                    mode = "eraser"      # ластик
+                    mode = "brush"       # кисть 1
+                elif event.key == pygame.K_t:
+                   mode = "rect"        # прямоугольник t
                 elif event.key == pygame.K_c:
-                    canvas.fill((255, 255, 255))  # очистить холст
+                    mode = "circle"      # круг c
+                elif event.key == pygame.K_e:
+                    mode = "eraser"      # ластик e
+                elif event.key == pygame.K_d:
+                    canvas.fill((255, 255, 255))  # очистить d
+                elif event.key == pygame.K_r:
+                    color = (255, 0, 0)  # красный r
+                elif event.key == pygame.K_g:
+                    color = (0, 200, 0)  # зеленый g
+
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1:  # зажата левая кнопка мыши
@@ -56,7 +61,7 @@ def main():
                     pygame.draw.line(canvas, draw_color, last_pos, event.pos, radius)
                     last_pos = event.pos
 
-        screen.fill((255, 255, 255))  # белый фон экрана
+        screen.fill((255, 255, 255))  # белый фон
         screen.blit(canvas, (0, 0))
         pygame.display.flip()
         clock.tick(60)
