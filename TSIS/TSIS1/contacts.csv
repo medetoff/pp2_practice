@@ -1,0 +1,7 @@
+first_name,last_name,email,birthday,group,phone,phone_type
+Arman,Johnson,arman@gmail.com,1990-05-14,Friend,77001112233,mobile
+Arman,Johnson,arman@gmail.com,1990-05-14,Friend,77001112244,home
+Serzhan,Smith,serzhan@work.com,1985-11-22,Work,77012223344,work
+Nurdaulet,White,nurdauet@yahoo.com,1993-03-08,Family,77023334455,mobile
+Rustem,Brown,rustem@gmail.com,1978-07-30,Other,77034445566,home
+Aibek,Davis,aibek@gmail.com,,Friend,77045556677,mobile

@@ -1,0 +1,104 @@
+[
+  {
+    "first_name": "David",
+    "last_name": "Brown",
+    "email": null,
+    "birthday": "1978-07-30",
+    "group": "Other",
+    "phones": [
+      {
+        "phone": "77034445566",
+        "type": "home"
+      }
+    ],
+    "created_at": "2026-04-26T07:28:58.436383"
+  },
+  {
+    "first_name": "Rustem",
+    "last_name": "Brown",
+    "email": "rustem@gmail.com",
+    "birthday": "1978-07-30",
+    "group": "Other",
+    "phones": [
+      {
+        "phone": "77034445566",
+        "type": "home"
+      }
+    ],
+    "created_at": "2026-04-26T08:04:00.652615"
+  },
+  {
+    "first_name": "Aibek",
+    "last_name": "Davis",
+    "email": "aibek@gmail.com",
+    "birthday": null,
+    "group": "Friend",
+    "phones": [
+      {
+        "phone": "77045556677",
+        "type": "mobile"
+      }
+    ],
+    "created_at": "2026-04-26T08:04:00.654999"
+  },
+  {
+    "first_name": "Arman",
+    "last_name": "Johnson",
+    "email": "arman@gmail.com",
+    "birthday": "1990-05-14",
+    "group": "Friend",
+    "phones": [
+      {
+        "phone": "77001112233",
+        "type": "mobile"
+      },
+      {
+        "phone": "77001112244",
+        "type": "home"
+      }
+    ],
+    "created_at": "2026-04-26T08:04:00.622495"
+  },
+  {
+    "first_name": "Serzhan",
+    "last_name": "Smith",
+    "email": "serzhan@work.com",
+    "birthday": "1985-11-22",
+    "group": "Work",
+    "phones": [
+      {
+        "phone": "77012223344",
+        "type": "work"
+      }
+    ],
+    "created_at": "2026-04-26T08:04:00.646459"
+  },
+  {
+    "first_name": "Serzhan",
+    "last_name": "Tokbayev",
+    "email": "serzh@gmail.com",
+    "birthday": "2008-05-01",
+    "group": null,
+    "phones": [
+      {
+        "phone": "87002223344",
+        "type": "mobile"
+      }
+    ],
+    "created_at": "2026-04-26T07:28:27.948099"
+  },
+  {
+    "first_name": "Nurdaulet",
+    "last_name": "White",
+    "email": "nurdauet@yahoo.com",
+    "birthday": "1993-03-08",
+    "group": "Family",
+    "phones": [
+      {
+        "phone": "77023334455",
+        "type": "mobile"
+      }
+    ],
+    "created_at": "2026-04-26T08:04:00.649860"
+  }
+]
